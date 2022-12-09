@@ -1,0 +1,45 @@
+dependencies {
+    // 优先加载bootstrap.yml配置
+    api('org.springframework.cloud:spring-cloud-starter')
+    api('org.springframework.cloud:spring-cloud-starter-bootstrap')
+
+    //@Retry注解支持
+    api('org.springframework.retry:spring-retry')
+    //@Valid注解支持
+    api('org.hibernate.validator:hibernate-validator')
+    //@RestController功能支持
+    api('org.springframework.boot:spring-boot-starter-web'){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    api('org.springframework.boot:spring-boot-starter-jetty')
+    //@Aspect注解支持
+    api("org.springframework.boot:spring-boot-starter-aop")
+    //health、info、metrics等Endpoint功能支持
+    api('org.springframework.boot:spring-boot-starter-actuator')
+    //metrics可输出prometheus格式指标
+    api('io.micrometer:micrometer-registry-prometheus')
+
+    // MYSQL
+    runtimeOnly('mysql:mysql-connector-java')
+    api('com.baomidou:mybatis-plus-boot-starter')
+    api('com.baomidou:mybatis-plus-generator')
+    api("com.github.pagehelper:pagehelper-spring-boot-starter")
+    api('org.freemarker:freemarker')
+
+    // redis
+    api('org.springframework.boot:spring-boot-starter-data-redis')
+    api('org.redisson:redisson')
+
+    // openfeign
+    api('org.springframework.cloud:spring-cloud-starter-openfeign')
+    api('io.github.openfeign:feign-okhttp')
+    api("org.springframework.cloud:spring-cloud-loadbalancer")
+    api("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery")
+    api('com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config')
+    // Tool
+    api('com.alibaba:fastjson')
+    api('com.google.guava:guava')
+    api('cn.hutool:hutool-all')
+
+
+}

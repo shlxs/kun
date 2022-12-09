@@ -1,0 +1,6 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.sunrisecolors.core.autoconfigure.ActuatorCustomizeAutoConfiguration,\
+  cn.sunrisecolors.core.autoconfigure.WebMvcConfiguration,\
+  cn.sunrisecolors.core.autoconfigure.MybatisInterceptorConfiguration,\
+  cn.sunrisecolors.core.observability.tracing.TraceAwareFilter

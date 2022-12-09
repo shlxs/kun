@@ -1,0 +1,103 @@
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    bootJar {
+        enabled = false
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    compileJava {
+        options.release = 11
+        options.encoding = 'UTF-8'
+    }
+
+    processResources {
+        exclude('application-*.yml', 'application-*.properties')
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.0.1.0"
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.1"
+        }
+
+        dependencies {
+            dependency('com.alibaba:fastjson:1.2.75')
+            dependency('org.freemarker:freemarker:2.3.28')
+            dependency('com.google.guava:guava:23.0')
+            dependency('com.baomidou:mybatis-plus-boot-starter:3.4.0')
+            dependency('com.baomidou:mybatis-plus-generator:3.4.0')
+            dependency('com.github.pagehelper:pagehelper-spring-boot-starter:1.2.3')
+            dependency('cn.hutool:hutool-all:5.8.6')
+            dependency('com.aliyun.oss:aliyun-sdk-oss:3.11.1')
+            dependency('org.apache.httpcomponents:httpclient:4.5.13')
+            dependency('io.vavr:vavr:0.10.2')
+            dependency('com.tencent.ads:marketing-api-java-sdk:1.1.31')
+            dependency('commons-io:commons-io:2.6')
+            dependency('org.apache.commons:commons-lang3:3.9')
+            dependency('net.dongliu:apk-parser:2.6.10')
+            dependency('com.google.protobuf:protobuf-java:3.19.4')
+            dependency('com.google.protobuf:protoc:3.19.4')
+            dependency('com.alibaba:easyexcel:2.2.6')
+            dependency('com.opencsv:opencsv:4.4')
+            dependency('de.mkammerer:argon2-jvm:2.4')
+            dependency('com.google.inject:guice:5.0.1')
+            dependency('com.facebook.business.sdk:facebook-java-business-sdk:12.0.1')
+            dependency('com.google.api-ads:google-ads:17.0.1')
+            dependency('org.redisson:redisson:3.17.2')
+            dependency('org.apache.commons:commons-csv:1.6')
+            dependency('com.xuxueli:xxl-job-core:2.3.1')
+            dependency('org.jsoup:jsoup:1.13.1')
+            dependency('org.mapstruct:mapstruct-processor:1.5.3.Final')
+            dependency('org.mapstruct:mapstruct:1.5.3.Final')
+        }
+    }
+
+    dependencies {
+        //@Data、@Slf4j等注解支持
+        annotationProcessor('org.projectlombok:lombok')
+        compileOnly('org.projectlombok:lombok')
+        testAnnotationProcessor('org.projectlombok:lombok')
+        testCompileOnly('org.projectlombok:lombok')
+
+        annotationProcessor('org.mapstruct:mapstruct-processor')
+        testAnnotationProcessor('org.mapstruct:mapstruct-processor')
+        implementation('org.mapstruct:mapstruct')
+
+        implementation('org.slf4j:slf4j-api')
+        //@SpringBootTest
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation('junit:junit')
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs += [
+                '-Amapstruct.suppressGeneratorTimestamp=true',
+                '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+                '-Amapstruct.verbose=true',
+                '-Amapstruct.defaultComponentModel=spring',
+                '-Amapstruct.unmappedTargetPolicy=IGNORE'
+        ]
+    }
+
+    springBoot {
+        buildInfo {
+            properties {
+                additional = [
+                        'spring_boot_version': org.springframework.boot.gradle.plugin.SpringBootPlugin.SPRING_BOOT_VERSION,
+                        'gradle_version'     : GradleVersion.current().version,
+                        'java_version'       : JavaVersion.current().name,
+                ]
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.incremental = true
+}
